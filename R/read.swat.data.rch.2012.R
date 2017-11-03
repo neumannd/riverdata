@@ -8,9 +8,11 @@
 #'                    'header=FALSE' it has to point to the first data row
 #' @param nrow.data number of data rows to read
 #'
-#' @return as.data.frame, which contains the data from the output.rch file; 
-#'          column names of as.data.frame should be equal to column names in
-#'          the reach file
+#' @return list containing a data.frame (out$data), a character array 
+#'           (out$units), and a character (out$type). The first contains the 
+#'           actual data formatted as a data.frame. The second contains the 
+#'           units to the corresponding columns of the data.frame. The third
+#'           contains the type of data (here: 'swat'; can also be 'mom').
 #' @export
 #'
 #' @examples
@@ -133,6 +135,7 @@ read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE) {
                       'kg N',
                       'kg P',
                       'mg NO3-N/kg sed')
+  data.out$type = 'swat'
   
   # expected default header
   str.header.dflt <- '       RCH      GIS   MON     AREAkm2  FLOW_INcms FLOW_OUTcms     EVAPcms    TLOSScms  SED_INtons SED_OUTtons SEDCONCmg/L   ORGN_INkg  ORGN_OUTkg   ORGP_INkg  ORGP_OUTkg    NO3_INkg   NO3_OUTkg    NH4_INkg   NH4_OUTkg    NO2_INkg   NO2_OUTkg   MINP_INkg  MINP_OUTkg   CHLA_INkg  CHLA_OUTkg   CBOD_INkg  CBOD_OUTkg  DISOX_INkg DISOX_OUTkg SOLPST_INmgSOLPST_OUTmg SORPST_INmgSORPST_OUTmg  REACTPSTmg    VOLPSTmg  SETTLPSTmgRESUSP_PSTmgDIFFUSEPSTmgREACBEDPSTmg   BURYPSTmg   BED_PSTmg BACTP_OUTctBACTLP_OUTct  CMETAL#1kg  CMETAL#2kg  CMETAL#3kg     TOT Nkg     TOT Pkg NO3ConcMg/l    WTMPdegc'

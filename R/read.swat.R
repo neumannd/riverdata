@@ -9,10 +9,17 @@
 #' @param version integer/numeric: SWAT output version, only 2012 and 2016 (equal) are implemented
 #' @param variables character array of variable names (==columns) to read in from the file; if == NULL [default], all variables are read
 #'
-#' @return as.data.frame, which contains the data from the file 'filename';
-#'          column names of as.data.frame should be equal to column names in
-#'          the reach file; only variables/columns listed in 'variables' are
-#'          returned;
+#' @return list containing a data.frame (out$data), a character array 
+#'           (out$units), and a character (out$type). The first contains the 
+#'           actual data formatted as a data.frame (more details below). The 
+#'           second contains the units to the corresponding columns of the 
+#'           data.frame. The third contains the type of data (here: 'swat'; 
+#'           can also be 'mom').
+#'           
+#'           The data.frame out$data which contains the data from the file 
+#'           'filename'; column names of as.data.frame should be equal to 
+#'           column names in the reach file; only variables/columns listed 
+#'           in 'variables' are returned;
 #' @export
 #'
 #' @examples

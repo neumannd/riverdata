@@ -2,7 +2,7 @@
 #'
 #' TODO
 #'
-#' @param inData list containing a data.frame (in$data) with river inflow data and a character array (in$units) with corresponding units.
+#' @param inData list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and a character (in$type).
 #' @param from character: current data averaging interval; e.g. 'annual', 'monthly', or 'daily'
 #' @param to character: future averaging interval; e.g. 'annual', 'monthly', or 'daily'
 #'

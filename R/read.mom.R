@@ -41,15 +41,15 @@ read.mom = function(filename) {
   
   ## write output data
   # create list for output
-  riverData = list()
+  data.out = list()
   # add a list entry for the data (a data.frame)
-  riverData$data = cbind(varTime, rawData[,7:(6+nVar)])
+  data.out$data = cbind(varTime, rawData[,7:(6+nVar)])
   # set column/variable names in the data.frame
-  names(riverData$data) = c('time', varName)
+  names(data.out$data) = c('time', varName)
   # add another list entry containing the units
-  riverData$units = c('time', varUnit)
+  data.out$units = c('time', varUnit)
   
   # return data
-  return(riverData)
+  return(data.out)
 }
 

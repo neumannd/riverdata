@@ -57,16 +57,12 @@ read.swat <- function(filename, filetype = substr(filename,nchar(filename)-2,nch
   }
 
   
-  # initialize variables
-  izero = as.integer(0)
-  ione = as.integer(1)
-  itwo = as.integer(2)
-  
-  nrows.data = izero
-  nrows.total = izero
-  nrows.meta = as.integer(8)
-  row.header = as.integer(9)
-  row.data = as.integer(10)
+  # initialize variables ----
+  nrows.data = 0L
+  nrows.total = 0L
+  nrows.meta = 8L
+  row.header = 9L
+  row.data = 10L
   
 
   # start processing ----
@@ -81,7 +77,7 @@ read.swat <- function(filename, filetype = substr(filename,nchar(filename)-2,nch
       
       # count rows of meta data
       while ( (length(str.tmp)) > 0 && (substr(str.tmp,1,10) != str.firstcol) ) {
-        nrows.total = nrows.total + ione
+        nrows.total = nrows.total + 1L
         str.tmp = readLines(fileHandle, n=1)
       }
       
@@ -90,15 +86,15 @@ read.swat <- function(filename, filetype = substr(filename,nchar(filename)-2,nch
         warning(paste0('read.swat warning: number of lines of meta data (', nrows.total, ') not as expected (', nrows.meta, ').'))
         nrows.meta = nrows.total
       }
-      nrows.total = nrows.total + ione
+      nrows.total = nrows.total + 1L
       row.header = nrows.total
-      row.data = nrows.total + ione
+      row.data = nrows.total + 1L
       
       # count further rows
       while ( (length(readLines(fileHandle, n=1))) > 0 ) {
-        nrows.total = nrows.total + ione
+        nrows.total = nrows.total + 1L
       }
-      nrows.data = nrows.total - ione - nrows.meta
+      nrows.data = nrows.total - 1L - nrows.meta
       
       # close and re-open file to reset the line pointer to 1
       close(fileHandle)                    # close file
@@ -107,7 +103,7 @@ read.swat <- function(filename, filetype = substr(filename,nchar(filename)-2,nch
     
     if (isOpen(fileHandle)) {
       # read rows of meta data
-      str.tmp <- readLines(fileHandle, n = row.header-ione)
+      str.tmp <- readLines(fileHandle, n = row.header-1L)
       print(nrows.data)
       
       if ( filetype == 'rch' ) {

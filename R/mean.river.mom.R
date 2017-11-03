@@ -71,6 +71,8 @@ mean.river.mom = function(inData, from='none', to='none') {
       otData = list()
       # copy units
       otData$units = inData$units
+      # copy type
+      otData$type = inData$otData
       # insert data
       otData$data <- cbind(formatC(minYear:maxYear, format = 'd', width = 4), tmp_valsY)
       names(otData$data)[1] <- 'time'

@@ -6,10 +6,11 @@
 #'
 #' @param filename character: path/filename of the file to read
 #'
-#' @return list containing a data.frame (out$data) and a character array 
-#'           (out$units). The first contains the actual data formatted as a 
-#'           data.frame. The latter contains the units to the corresponding
-#'           columns of the data.frame.
+#' @return list containing a data.frame (out$data), a character array 
+#'           (out$units), and a character (out$type). The first contains the 
+#'           actual data formatted as a data.frame. The second contains the 
+#'           units to the corresponding columns of the data.frame. The third
+#'           contains the type of data (here: 'mom'; can also be 'swat').
 #' @export
 #'
 #' @examples

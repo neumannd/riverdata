@@ -17,7 +17,7 @@
 #'   # read a file:
 #'   test.mom <- read.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
-read.mom = function(filename) {
+read.river.mom = function(filename) {
   
   # extract raw data
   rawData = read.table(filename, header = FALSE, stringsAsFactors = FALSE, skip = 4)
@@ -48,6 +48,8 @@ read.mom = function(filename) {
   names(data.out$data) = c('time', varName)
   # add another list entry containing the units
   data.out$units = c('time', varUnit)
+  # source type of data
+  data.out$type = 'mom'
   
   # return data
   return(data.out)

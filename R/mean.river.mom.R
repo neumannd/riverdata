@@ -1,14 +1,22 @@
-#' Title
+#' Calculates annual mean values from MOM river input data
 #'
-#' @param inData 
-#' @param from 
-#' @param to 
+#' TODO
 #'
-#' @return
+#' @param inData list containing a data.frame (in$data) with river inflow data and a character array (in$units) with corresponding units.
+#' @param from character: current data averaging interval; e.g. 'annual', 'monthly', or 'daily'
+#' @param to character: future averaging interval; e.g. 'annual', 'monthly', or 'daily'
+#'
+#' @return list of newly averaged data; same structure as input data
 #' @export
 #'
 #' @examples
+#' 
+#'   TODO
 mean.river.mom = function(inData, from='none', to='none') {
+  if ( tolower(inData$type) != 'mom' ) {
+    stop('mean.river.mom stop: inData is no MOM data')
+  }
+  
   if (to == 'year') to = 'annual'
   if (from == 'year') from = 'annual'
   if (to == 'month') to = 'monthly'

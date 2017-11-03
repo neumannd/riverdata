@@ -1,15 +1,36 @@
-
-# filename='../level-1b/GER_Dan_Str_Warnow.dat'
-
-readRiverData = function(filename) {
-
-  riverData = list()
+#' Reads a river runoff/nutrient-load input file for the ocean model MOM into R
+#' 
+#' Reads a MOM input file, which contains river runoff and riverine nutrient 
+#' loads, and writes the data into a data.frame nested into a list. The list
+#' also contains units corresponding to the columns of the data.frame.
+#'
+#' @param filename character: path/filename of the file to read
+#'
+#' @return list containing a data.frame (out$data) and a character array 
+#'           (out$units). The first contains the actual data formatted as a 
+#'           data.frame. The latter contains the units to the corresponding
+#'           columns of the data.frame.
+#' @export
+#'
+#' @examples
+#' 
+#'   # read a file:
+#'   test.mom <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   
+read.mom = function(filename) {
   
+  # extract raw data
   rawData = read.table(filename, header = FALSE, stringsAsFactors = FALSE, skip = 4)
   
+  # process time
+  varTime = strptime(paste(rawData[,1], '-', rawData[,2], '-', rawData[,3], ' ', 
+                           rawData[,4], ':', rawData[,5], ':', rawData[,6], ' GMT', sep = ''), format = '%Y-%m-%d %H:%M:%S', tz='GMT')
+  
+  # get header information
   rawHeader = strsplit(trimws(substr(scan(filename, skip = 3, nlines = 1, what = character(), sep = ';')[[1]], 6,9999)), split = ']', fixed=TRUE)[[1]]
   nVar = length(rawHeader)
   
+  # process header information: split it into 'variable name' and 'unit'
   varName = rep('', nVar)
   varUnit = rep('', nVar)
   for (iV in 1:nVar) {
@@ -18,12 +39,17 @@ readRiverData = function(filename) {
     varUnit[iV] = trimws(tmpSplit[2])
   }
   
-  riverData$time = strptime(paste(rawData[,1], '-', rawData[,2], '-', rawData[,3], ' ', 
-               rawData[,4], ':', rawData[,5], ':', rawData[,6], ' GMT', sep = ''), format = '%Y-%m-%d %H:%M:%S', tz='GMT')
-  riverData$vals = rawData[,7:(6+nVar)]
-  riverData$names = varName
-  riverData$units = varUnit
+  ## write output data
+  # create list for output
+  riverData = list()
+  # add a list entry for the data (a data.frame)
+  riverData$data = cbind(varTime, rawData[,7:(6+nVar)])
+  # set column/variable names in the data.frame
+  names(riverData$data) = c('time', varName)
+  # add another list entry containing the units
+  riverData$units = c('time', varUnit)
   
+  # return data
   return(riverData)
 }
 

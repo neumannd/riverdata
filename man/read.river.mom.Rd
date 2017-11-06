@@ -11,10 +11,13 @@ read.river.mom(filename)
 }
 \value{
 list containing a data.frame (out$data), a character array 
-          (out$units), and a character (out$type). The first contains the 
-          actual data formatted as a data.frame. The second contains the 
-          units to the corresponding columns of the data.frame. The third
-          contains the type of data (here: 'mom'; can also be 'swat').
+          (out$units), and two character variables (out$format and
+          out$tstep). The first contains the actual data formatted as a 
+          data.frame. The second contains the units to the corresponding 
+          columns of the data.frame. The third contains the source/format 
+          of data (here: 'mom'; can also be 'swat'). The fourth contains
+          information on the time step of the data (resp.: on which time
+          interval they are averaged). The latter is set to 'monthly'.
 }
 \description{
 Reads a MOM input file, which contains river runoff and riverine nutrient 
@@ -26,4 +29,10 @@ also contains units corresponding to the columns of the data.frame.
   # read a file:
   test.mom <- read.mom('files/GER_Dan_Str_Warnow.dat')
   
+}
+\seealso{
+read.swat, read.swat.data.rch.2012
+}
+\author{
+Daniel Neumann, daniel.neumann@io-warnemuende.de
 }

@@ -1,3 +1,26 @@
+#' Appends new inflow information to an existing HBM grid data namelist file
+#' 
+#' An existing Fortran namelist file is used. The two namelists 'DIMENSIONS'
+#' and 'RIVERS' are modified. In 'DIMENSIONS', the variable 'NRIVERS' is 
+#' incremented by the number of new rivers. In 'RIVERS', some information
+#' is added to the variables 'KRQI' and 'RWQI'. 'KRQI' contains the x- and
+#' y-coordinates of the grid cells, in which the rivers enter the sea. 'RWQI'
+#' contains the actual inflow data of each river.
+#'
+#' @param riverNames character array with river names
+#' @param riverInfos list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos
+#' @param riverData list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos
+#' @param grids character array with grid names
+#' @param dIn character; directory containing the input file (to which data should be appended)
+#' @param dOt character; directory into which the final file should be written 
+#' @param year integer; year to write out
+#' @param overwrite logical; overwrite 'dOt/filename' it already exists
+#' @param warn logical; allow/suppress warnings
+#'
+#' @return file written
+#' @export
+#'
+#' @examples
 write.river.append2NML = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, overwrite=TRUE, warn = TRUE) {
   
   ## NAMELIST: data_GRID_RIVER.nml

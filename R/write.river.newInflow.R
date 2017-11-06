@@ -1,3 +1,30 @@
+#' Creates a new riverinflow* file for the HBM model
+#'
+#' A new text file is created. The first row contains " DAILY RIVER RUNOFF" and
+#' the second row "[date in format 'YYYY.MM.DD hh:mm:ss'] [annual inflow 1] [annual inflow 2]"
+#' The 'annual inflow n' has to be printed in the Fortran format 'F8.6' 
+#' (width=8; 6 digits in front of the '.'). One file is created per day.
+#'
+#' @param riverInfos list with grid information
+#' @param riverData list with river inflow data
+#' @param dOt character; directory into which the final file should be written 
+#' @param year integer; year to write out
+#' @param month integer; month to write out; if month==0 => write all months
+#' @param day integer; day to write out; if day==0 => write all days
+#' @param overwrite logical; overwrite 'dOt/filename' it already exists
+#' @param warn logical; allow/suppress warnings
+#'
+#' @return file written
+#' @export
+#'
+#' @examples
+#' 
+#' 
+#' 
+#'  ## example file content
+#'  # DAILY RIVER RUNOFF
+#'  # 2012.07.27 12:00:00     2.1
+#'  
 write.river.newInflow = function(riverInfo, riverData, dOt, year, month=0, day=0, overwrite=TRUE, warn=TRUE) {
   
   # initialize variables ----

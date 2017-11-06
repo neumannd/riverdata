@@ -1,3 +1,32 @@
+#' Creates a new grid data namelist file for the HBM model
+#'
+#' A new fortran namelist file is created. It contains the two nameslists
+#' 'DIMENSIONS' and 'RIVERS'. 'RIVERS', contains the variables 'KRQI' and 
+#' 'RWQI'. 'KRQI' contains the x- and y-coordinates of the grid cells, in 
+#' which the rivers enter the sea. 'RWQI' contains the actual inflow data 
+#' of each river.
+#'
+#' @param riverInfos list with grid information
+#' @param riverData list with river inflow data
+#' @param dOt character; directory into which the final file should be written 
+#' @param year integer; year to write out
+#' @param overwrite logical; overwrite 'dOt/filename' it already exists
+#' @param warn logical; allow/suppress warnings
+#'
+#' @return file written
+#' @export
+#'
+#' @examples
+#' 
+#' 
+#'  ## example content of an output file:
+#'  # &DIMENSIONS
+#'  # EW=0, NS=0, LAYERS=0, NZBND=0, NUBND=0, NVBND=0, NRIVERS=1, NUDAMS=0, NVDAMS=0, NWEIRS=0
+#'  # /
+#'  # &RIVERS
+#'  # KRQI=0, 0, 253, 289, RWQI=0.000000000000000000E+00, 3.53739587431693980
+#'  # /
+#'
 write.river.newNML = function(riverInfo, riverData, dOt, year, overwrite=TRUE, warn = TRUE) {
   
   errCode = 0

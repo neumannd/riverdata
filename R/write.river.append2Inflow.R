@@ -1,3 +1,25 @@
+#' Appends new inflow information to an existing HBM inflow file
+#' 
+#' New river inflow data of the the Fortran format 'F8.6' 
+#' (width=8; 6 digits in front of the '.') is appended to an existing file.
+#' One file per day is modified.
+#' 
+#' @param riverNames character array with river names
+#' @param riverInfos list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos
+#' @param riverData list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos
+#' @param grids character array with grid names
+#' @param dIn character; directory containing the input file (to which data should be appended)
+#' @param dOt character; directory into which the final file should be written 
+#' @param year integer; year to write out
+#' @param month integer; month to write out; if month==0 => write all months
+#' @param day integer; day to write out; if day==0 => write all days
+#' @param overwrite logical; overwrite 'dOt/filename' it already exists
+#' @param warn logical; allow/suppress warnings
+#'
+#' @return file written
+#' @export
+#'
+#' @examples
 write.river.append2Inflow = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, month=0, day=0, overwrite=TRUE, warn=TRUE) {
   
   

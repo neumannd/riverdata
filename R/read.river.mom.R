@@ -7,10 +7,13 @@
 #' @param filename character: path/filename of the file to read
 #'
 #' @return list containing a data.frame (out$data), a character array 
-#'           (out$units), and a character (out$type). The first contains the 
-#'           actual data formatted as a data.frame. The second contains the 
-#'           units to the corresponding columns of the data.frame. The third
-#'           contains the type of data (here: 'mom'; can also be 'swat').
+#'           (out$units), and two character variables (out$format and
+#'           out$tstep). The first contains the actual data formatted as a 
+#'           data.frame. The second contains the units to the corresponding 
+#'           columns of the data.frame. The third contains the source/format 
+#'           of data (here: 'mom'; can also be 'swat'). The fourth contains
+#'           information on the time step of the data (resp.: on which time
+#'           interval they are averaged). The latter is set to 'monthly'.
 #' @export
 #'
 #' @examples
@@ -49,8 +52,10 @@ read.river.mom = function(filename) {
   names(data.out$data) = c('time', varName)
   # add another list entry containing the units
   data.out$units = c('time', varUnit)
-  # source type of data
-  data.out$type = 'mom'
+  # source format of data
+  data.out$format = 'mom'
+  # set time step
+  otData$tstep = 'monthly'
   
   # return data
   return(data.out)

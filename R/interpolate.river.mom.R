@@ -1,21 +1,37 @@
 #' Interpolates river inflow data
-#' 
-#' TODO
 #'
-#' @param inData list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and a character (in$type).
-#' @param from character, source time interval; e.g. 'annual', 'monthly', or 'daily'
+#' Interpolates river inflow data in the time dimensions. Currently, only
+#' interpolation from monthly to values is implemented. Additionally, only 
+#' the interpolation methods 'step' is implemented.
+#'
+#' @param inData list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and a character (in$format).
+#' @param from character: current data averaging interval; does not need to be set if in$tstep is set properly; if not, it can be manually set to e.g. 'annual', 'monthly', or 'daily'
 #' @param to character, target time interval; e.g. 'annual', 'monthly', or 'daily'
 #' @param method character, interpolation method
 #'
 #' @return list of newly averaged data; same structure as input data
+#'
+#'           list containing a data.frame (out$data), a character array 
+#'           (out$units), and two character variables (out$format and
+#'           out$tstep). The first contains the actual data formatted as a 
+#'           data.frame. The second contains the units to the corresponding 
+#'           columns of the data.frame. The third contains the source/format 
+#'           of data (here: 'mom'; can also be 'swat'). The fourth contains
+#'           information on the time step of the data (resp.: on which time
+#'           interval they are averaged).
 #' @export
 #'
 #' @examples
 #' 
-#'   TODO
-interpolate.river.mom.R = function(inData, from='none', to='none', method = 'step') {
-  if ( tolower(inData$type) != 'mom' ) {
-    stop("interpolate.river.mom.R stop: in$type needs to be of value 'mom' or 'MOM'")
+#'   # read a file:
+#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   
+#'   # interpolate from monthly to daily
+#'   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
+#'   
+interpolate.river.mom = function(inData, from=inData$tstep, to='none', method = 'step') {
+  if ( tolower(inData$format) != 'mom' ) {
+    stop("interpolate.river.mom.R stop: in$format needs to be of value 'mom' or 'MOM'")
   }
   
   if (to == 'year') to = 'annual'
@@ -40,7 +56,7 @@ interpolate.river.mom.R = function(inData, from='none', to='none', method = 'ste
                                                           '1996-06-16 00:00 GMT', '1996-07-16 00:00 GMT')),
                                              as.data.frame(array(c(2,3,4,4,2,1,1,5,6,5), dim = c(10,1))))),
                   units = c('time', 'kg'),
-                  type = 'mom')
+                  format = 'mom')
     names(inData$data) = c('time', 'var')
     
     
@@ -128,8 +144,10 @@ interpolate.river.mom.R = function(inData, from='none', to='none', method = 'ste
       otData = list()
       # copy units
       otData$units = inData$units
-      # copy type
-      otData$type = inData$type
+      # copy format
+      otData$format = inData$format
+      # set time step
+      otData$tstep = to
       # insert data
       otData$data = cbind(tmp_timeD, as.data.frame(tmp_valsD))
       names(otData$data) = names(inData$data)

@@ -32,7 +32,7 @@
 #'   riverInfos <- read.infos.rivers(file, grid_info)
 #'   
 #'   # write new namelist
-#'   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'example_dir', 2012, overwrite=FALSE)
+#'   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'out_dir', 2012, overwrite=FALSE)
 #'   
 #' 
 #'   ## example content of an output file:

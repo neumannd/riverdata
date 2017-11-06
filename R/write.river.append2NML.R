@@ -21,6 +21,27 @@
 #' @export
 #'
 #' @examples
+#' 
+#'   # read a file:
+#'   test.mom.monthly <- list()
+#'   test.mom.monthly$Warnow <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly$Trave <- read.mom('files/GER_Dan_Str_Trave.dat')
+#'   
+#'   # calculate annual means from monthly data
+#'   test.mom.annual <- list()
+#'   test.mom.annual$Warnow <- mean.river.mom(test.mom.monthly$Warnow, to = 'anual')
+#'   test.mom.annual$Trave <- mean.river.mom(test.mom.monthly$Trave, to = 'anual')
+#'   
+#'   # get grid info
+#'   grid_info <- get.infos.grids.hbm.basic()
+#'   
+#'   # get river infos
+#'   file <- 'files/river_list.dat'
+#'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   
+#'   # write new namelist
+#'   write.river.newNML(c('Warnow', 'Trave'), grid_info, test.mom.annual, 'files', 'out_dir', 2012, overwrite=FALSE)
+#'   
 write.river.append2NML = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, overwrite=TRUE, warn = TRUE) {
   
   ## NAMELIST: data_GRID_RIVER.nml

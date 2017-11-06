@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get grid cell (x and y) for given lon and lat coordinates of...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for latlon2cell"><tr><td>latlon2cell</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get grid cell (x and y) for given lon and lat coordinates of a defined regular lat-lon-grid</h2>
+
+<h3>Description</h3>
+
+<p>We insert lat and lon coordinates (note the order: not lon and lat) and 
+provide grid information as parameter 'grid'. 'grid' is a nested list, which
+contains sub-lists denoted as 'lon' and 'lat'. The sub-list 'lon' has to 
+contain numeric values denoted as 'lonw' (westerly boundary of the grid), 
+'lone' (easterly boundary of the grid), and 'dlon' (delta-longitude; 
+distance between two grid cells). The sub-list 'lat' has to contain numeric
+values denoted as 'latn' (northern boundary of the grid), 'lats' (southern
+boundary of the grid), 'dlat' (delta-latitude), and 'nlat' (the number of 
+grid cells in latitudal direction). THE ORIGIN OF THE GRID IS CONSIDERED TO 
+BE IN THE TOP LEFT CORNER.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+latlon2cell(lat, lon, grid)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>lat</code></td>
+<td>
+<p>numeric (single value or 1d array); latitude coordinate</p>
+</td></tr>
+<tr valign="top"><td><code>lon</code></td>
+<td>
+<p>numeric (single value or 1d array); longitude coordinate</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>grid definition (see description or example for structure)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list('x'=..., 'y'=...); list of x- and y-coordinates of the grid cells
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # grid definition
+  grid &lt;- list(lon = list(lonw=-5.0, lone=10.0, dlon=0.5),
+              lat = list(lats=49.0, latn=65.0, dlat=0.5, nlat=(65.0-49.0)/0.5))
+  
+  # OR
+  # grid &lt;- get.infos.grids.hbm.basic()$coarse
+  
+  # some coordinates
+  lon &lt;- c(-4.9, -4.1, 5.6)
+  lat &lt;- c(64.9, 64.9, 53.2)
+  
+  # get grid cells 
+  grid_cells &lt;- latlon2cell(lat, lon, grid)
+  # result should be:
+  #  - grid_cells$x: 1, 2, 22
+  #  - grid_cells$y: 1, 1, 24
+  
+</pre>
+
+
+</body></html>

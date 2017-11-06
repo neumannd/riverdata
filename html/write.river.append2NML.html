@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Appends new inflow information to an existing HBM grid data...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.river.append2NML"><tr><td>write.river.append2NML</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Appends new inflow information to an existing HBM grid data namelist file</h2>
+
+<h3>Description</h3>
+
+<p>An existing Fortran namelist file is used. The two namelists 'DIMENSIONS'
+and 'RIVERS' are modified. In 'DIMENSIONS', the variable 'NRIVERS' is 
+incremented by the number of new rivers. In 'RIVERS', some information
+is added to the variables 'KRQI' and 'RWQI'. 'KRQI' contains the x- and
+y-coordinates of the grid cells, in which the rivers enter the sea. 'RWQI'
+contains the actual inflow data of each river.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.river.append2NML(riverNames, riverInfos, riverData, grids, dIn, dOt, year,
+  overwrite = TRUE, warn = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>riverNames</code></td>
+<td>
+<p>character array with river names</p>
+</td></tr>
+<tr valign="top"><td><code>riverInfos</code></td>
+<td>
+<p>list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>riverData</code></td>
+<td>
+<p>list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>grids</code></td>
+<td>
+<p>character array with grid names</p>
+</td></tr>
+<tr valign="top"><td><code>dIn</code></td>
+<td>
+<p>character; directory containing the input file (to which data should be appended)</p>
+</td></tr>
+<tr valign="top"><td><code>dOt</code></td>
+<td>
+<p>character; directory into which the final file should be written</p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>integer; year to write out</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>logical; overwrite 'dOt/filename' it already exists</p>
+</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+<p>logical; allow/suppress warnings</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>file written
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>write.river.append2Inflow, write.river.newNML
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- list()
+  test.mom.monthly$Warnow &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly$Trave &lt;- read.mom('files/GER_Dan_Str_Trave.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual &lt;- list()
+  test.mom.annual$Warnow &lt;- mean.river.mom(test.mom.monthly$Warnow, to = 'anual')
+  test.mom.annual$Trave &lt;- mean.river.mom(test.mom.monthly$Trave, to = 'anual')
+  
+  # get grid info
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # get river infos
+  file &lt;- 'files/river_list.dat'
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+  # write new namelist
+  write.river.newNML(c('Warnow', 'Trave'), grid_info, test.mom.annual, 'files', 'out_dir', 2012, overwrite=FALSE)
+  
+&amp;DIMENSIONS
+EW=630, NS=387, LAYERS=25, NZBND=858, NUBND=0, NVBND=0, NRIVERS=8, NUDAMS=0, NVDAMS=0, NWEIRS=0
+/
+&amp;RIVERS
+KRQI=0, 0, 341, 606, 376, 82, 386, 169, 364, 302, 263, 193, 84, 579, 26, 477, 65, 159, RWQI=0.000000000000000000E+00, 522.000000000000000, 100.000000000000000, 450.000000000000000, 90
+0.000000000000000, 37.0000000000000000, 48.0000000000000000, 21.0000000000000000, 125.000000000000000
+/
+
+TODOs:
+ - increment NRIVERS by number of new rivers in DIMENSIONS namelist
+ - append coordinates (grid cell indices!) and inflow to RIVERS:
+      --Y,X,VAL
+      --MONTHLY (m3/s)
+</pre>
+
+
+</body></html>

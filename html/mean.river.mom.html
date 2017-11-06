@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calculates mean values from MOM river input data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mean.river.mom"><tr><td>mean.river.mom</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calculates mean values from MOM river input data</h2>
+
+<h3>Description</h3>
+
+<p>Calculates mean values from river inflow data. Currently, only averaging 
+from monthly to annual means is implemented.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'river.mom'
+mean(inData, from = inData$tstep, to = "none")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>inData</code></td>
+<td>
+<p>list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and two character variables (in$format and in$tstep).</p>
+</td></tr>
+<tr valign="top"><td><code>from</code></td>
+<td>
+<p>character: current data averaging interval; does not need to be set if in$tstep is set properly; if not, it can be manually set to e.g. 'annual', 'monthly', or 'daily'</p>
+</td></tr>
+<tr valign="top"><td><code>to</code></td>
+<td>
+<p>character: future averaging interval; e.g. 'annual', 'monthly', or 'daily'</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list of newly averaged data; same structure as input data; 
+</p>
+<p>list containing a data.frame (out$data), a character array 
+(out$units), and two character variables (out$format and
+out$tstep). The first contains the actual data formatted as a 
+data.frame. The second contains the units to the corresponding 
+columns of the data.frame. The third contains the source/format 
+of data (here: 'mom'; can also be 'swat'). The fourth contains
+information on the time step of the data (resp.: on which time
+interval they are averaged).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'anual')
+  
+</pre>
+
+
+</body></html>

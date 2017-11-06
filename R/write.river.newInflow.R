@@ -5,7 +5,7 @@
 #' The 'annual inflow n' has to be printed in the Fortran format 'F8.6' 
 #' (width=8; 6 digits in front of the '.'). One file is created per day.
 #'
-#' @param riverInfos list with grid information
+#' @param riverInfo list with grid information
 #' @param riverData list with river inflow data
 #' @param dOt character; directory into which the final file should be written 
 #' @param year integer; year to write out
@@ -19,7 +19,22 @@
 #'
 #' @examples
 #' 
-#' 
+#'   # read a file:
+#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   
+#'   # interpolate from monthly to daily
+#'   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
+#'   
+#'   # get grid info
+#'   grid_info <- get.infos.grids.hbm.basic()
+#'   
+#'   # get river infos
+#'   file <- 'files/river_list.dat'
+#'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   
+#'   # write new namelist
+#'   write.river.newNML(riverInfos$Warnow, test.mom.daily, 'example_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#'   
 #' 
 #'  ## example file content
 #'  # DAILY RIVER RUNOFF

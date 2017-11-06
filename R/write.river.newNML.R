@@ -6,7 +6,7 @@
 #' which the rivers enter the sea. 'RWQI' contains the actual inflow data 
 #' of each river.
 #'
-#' @param riverInfos list with grid information
+#' @param riverInfo list with grid information
 #' @param riverData list with river inflow data
 #' @param dOt character; directory into which the final file should be written 
 #' @param year integer; year to write out
@@ -18,14 +18,30 @@
 #'
 #' @examples
 #' 
+#'   # read a file:
+#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   
+#'   # calculate annual means from monthly data
+#'   test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')
+#'   
+#'   # get grid info
+#'   grid_info <- get.infos.grids.hbm.basic()
+#'   
+#'   # get river infos
+#'   file <- 'files/river_list.dat'
+#'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   
+#'   # write new namelist
+#'   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'example_dir', 2012, overwrite=FALSE)
+#'   
 #' 
-#'  ## example content of an output file:
-#'  # &DIMENSIONS
-#'  # EW=0, NS=0, LAYERS=0, NZBND=0, NUBND=0, NVBND=0, NRIVERS=1, NUDAMS=0, NVDAMS=0, NWEIRS=0
-#'  # /
-#'  # &RIVERS
-#'  # KRQI=0, 0, 253, 289, RWQI=0.000000000000000000E+00, 3.53739587431693980
-#'  # /
+#'   ## example content of an output file:
+#'   # &DIMENSIONS
+#'   # EW=0, NS=0, LAYERS=0, NZBND=0, NUBND=0, NVBND=0, NRIVERS=1, NUDAMS=0, NVDAMS=0, NWEIRS=0
+#'   # /
+#'   # &RIVERS
+#'   # KRQI=0, 0, 253, 289, RWQI=0.000000000000000000E+00, 3.53739587431693980
+#'   # /
 #'
 write.river.newNML = function(riverInfo, riverData, dOt, year, overwrite=TRUE, warn = TRUE) {
   

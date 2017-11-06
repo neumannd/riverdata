@@ -6,6 +6,7 @@
 #' @param riverInfo list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos
 #' @param riverData list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos
 #' @param netCDF2input list() with two character arrays netCDF2input$untagged and netCDF2input$tagged; these contain the names of rivers, which are tagged and untagged, respectively
+#' @param dOt character; directory into which the final file should be written
 #' @param year integer; year to write out
 #' @param overwrite logical; overwrite 'dOt/filename' it already exists
 #' @param warn logical; allow/suppress warnings
@@ -16,7 +17,30 @@
 #'
 #' @examples
 #' 
-write.river.netCDF = function(riverNames, riverInfo, riverData, netCDF2input, year, overwrite=TRUE, warn=TRUE, cmd_ncgen = 'ncgen') {
+#'   # read a file:
+#'   test.mom.monthly <- list()
+#'   test.mom.monthly$Warnow <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly$Trave <- read.mom('files/GER_Dan_Str_Trave.dat')
+#'   
+#'   # calculate annual means from monthly data
+#'   test.mom.annual <- list()
+#'   test.mom.daily$Warnow <- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
+#'   test.mom.daily$Trave <- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
+#'   
+#'   # get netCDF file variable mapping
+#'   varmapping.hbm <- get.varmapping.hbm.netcdf()
+#'   
+#'   # get grid info
+#'   grid_info <- get.infos.grids.hbm.basic()
+#'   
+#'   # get river infos
+#'   file <- 'files/river_list.dat'
+#'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   
+#'   # write new namelist
+#'   write.river.netCDF(c('Warnow', 'Trave'), riverInfos, test.mom.daily, varmapping.hbm, dOt, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#' 
+write.river.netCDF = function(riverNames, riverInfo, riverData, netCDF2input, dOt, year, overwrite=TRUE, warn=TRUE, cmd_ncgen = 'ncgen') {
   
   strYear='2012'
   nDaysM = c(31,28+ifelse(is.leapyear(year),1,0),31,30,31,30,31,31,30,31,30,31)
@@ -62,7 +86,7 @@ write.river.netCDF = function(riverNames, riverInfo, riverData, netCDF2input, ye
     
     for (iV in names(myNetCDF2input)) if(myNetCDF2input[[iV]] == '') myNetCDF2input[[iV]] = NULL
     
-    pOt=paste('../level-2/netCDF/river', strRiverId, '_', jG, '.nc', sep = '')
+    pOt=paste(dOt, '/river', strRiverId, '_', jG, '.nc', sep = '')
     system2(cmd_ncgen, args = paste0('-k nc4 -o ', pOt, ' scripts/filedef.cdl'))
     
     ncId = nc_open(pOt, write = TRUE)

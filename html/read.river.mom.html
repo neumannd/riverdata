@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reads a river runoff/nutrient-load input file for the ocean...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read.river.mom"><tr><td>read.river.mom</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reads a river runoff/nutrient-load input file for the ocean model MOM into R</h2>
+
+<h3>Description</h3>
+
+<p>Reads a MOM input file, which contains river runoff and riverine nutrient 
+loads, and writes the data into a data.frame nested into a list. The list
+also contains units corresponding to the columns of the data.frame.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read.river.mom(filename)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>filename</code></td>
+<td>
+<p>character: path/filename of the file to read</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list containing a data.frame (out$data), a character array 
+(out$units), and two character variables (out$format and
+out$tstep). The first contains the actual data formatted as a 
+data.frame. The second contains the units to the corresponding 
+columns of the data.frame. The third contains the source/format 
+of data (here: 'mom'; can also be 'swat'). The fourth contains
+information on the time step of the data (resp.: on which time
+interval they are averaged). The latter is set to 'monthly'.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>read.swat, read.swat.data.rch.2012
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  
+</pre>
+
+
+</body></html>

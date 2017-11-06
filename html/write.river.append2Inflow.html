@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Appends new inflow information to an existing HBM inflow file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.river.append2Inflow"><tr><td>write.river.append2Inflow</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Appends new inflow information to an existing HBM inflow file</h2>
+
+<h3>Description</h3>
+
+<p>New river inflow data of the the Fortran format 'F8.6' 
+(width=8; 6 digits in front of the '.') is appended to an existing file.
+One file per day is modified.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.river.append2Inflow(riverNames, riverInfos, riverData, grids, dIn, dOt,
+  year, month = 0, day = 0, overwrite = TRUE, warn = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>riverNames</code></td>
+<td>
+<p>character array with river names</p>
+</td></tr>
+<tr valign="top"><td><code>riverInfos</code></td>
+<td>
+<p>list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>riverData</code></td>
+<td>
+<p>list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>grids</code></td>
+<td>
+<p>character array with grid names</p>
+</td></tr>
+<tr valign="top"><td><code>dIn</code></td>
+<td>
+<p>character; directory containing the input file (to which data should be appended)</p>
+</td></tr>
+<tr valign="top"><td><code>dOt</code></td>
+<td>
+<p>character; directory into which the final file should be written</p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>integer; year to write out</p>
+</td></tr>
+<tr valign="top"><td><code>month</code></td>
+<td>
+<p>integer; month to write out; if month==0 =&gt; write all months</p>
+</td></tr>
+<tr valign="top"><td><code>day</code></td>
+<td>
+<p>integer; day to write out; if day==0 =&gt; write all days</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>logical; overwrite 'dOt/filename' it already exists</p>
+</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+<p>logical; allow/suppress warnings</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>file written
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>write.river.newInflow, write.river.append2NML
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- list()
+  test.mom.monthly$Warnow &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly$Trave &lt;- read.mom('files/GER_Dan_Str_Trave.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual &lt;- list()
+  test.mom.daily$Warnow &lt;- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
+  test.mom.daily$Trave &lt;- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
+  
+  # get grid info
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # get river infos
+  file &lt;- 'files/river_list.dat'
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+  # write new namelist
+  write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+  
+</pre>
+
+
+</body></html>

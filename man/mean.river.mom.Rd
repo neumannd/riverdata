@@ -2,24 +2,45 @@
 % Please edit documentation in R/mean.river.mom.R
 \name{mean.river.mom}
 \alias{mean.river.mom}
-\title{Calculates annual mean values from MOM river input data}
+\title{Calculates mean values from MOM river input data}
 \usage{
-\method{mean}{river.mom}(inData, from = "none", to = "none")
+\method{mean}{river.mom}(inData, from = inData$tstep, to = "none")
 }
 \arguments{
-\item{inData}{list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and a character (in$type).}
+\item{inData}{list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and two character variables (in$format and in$tstep).}
 
-\item{from}{character: current data averaging interval; e.g. 'annual', 'monthly', or 'daily'}
+\item{from}{character: current data averaging interval; does not need to be set if in$tstep is set properly; if not, it can be manually set to e.g. 'annual', 'monthly', or 'daily'}
 
 \item{to}{character: future averaging interval; e.g. 'annual', 'monthly', or 'daily'}
 }
 \value{
-list of newly averaged data; same structure as input data
+list of newly averaged data; same structure as input data; 
+
+          list containing a data.frame (out$data), a character array 
+          (out$units), and two character variables (out$format and
+          out$tstep). The first contains the actual data formatted as a 
+          data.frame. The second contains the units to the corresponding 
+          columns of the data.frame. The third contains the source/format 
+          of data (here: 'mom'; can also be 'swat'). The fourth contains
+          information on the time step of the data (resp.: on which time
+          interval they are averaged).
 }
 \description{
-TODO
+Calculates mean values from river inflow data. Currently, only averaging 
+from monthly to annual means is implemented.
 }
 \examples{
 
-  TODO
+  # read a file:
+  test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')
+  
+}
+\seealso{
+read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
+}
+\author{
+Daniel Neumann, daniel.neumann@io-warnemuende.de
 }

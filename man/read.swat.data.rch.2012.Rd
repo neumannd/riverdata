@@ -4,7 +4,8 @@
 \alias{read.swat.data.rch.2012}
 \title{Read data from a reach (RCH) SWAT output file}
 \usage{
-read.swat.data.rch.2012(fileHandle, nrow.data, header = TRUE)
+read.swat.data.rch.2012(fileHandle, nrow.data, header = TRUE, nreach = 1,
+  ireach = 1)
 }
 \arguments{
 \item{fileHandle}{open connection to a file; the pointer in the file has to 
@@ -12,13 +13,22 @@ point to the header row if 'header=TRUE'; if
 'header=FALSE' it has to point to the first data row}
 
 \item{nrow.data}{number of data rows to read}
+
+\item{header}{logical: consider the first row as header row (or not) [default = TRUE]}
+
+\item{nreach}{integer: number of reaches in the file}
+
+\item{ireach}{integer: index of the reach's data to extract}
 }
 \value{
 list containing a data.frame (out$data), a character array 
-          (out$units), and a character (out$type). The first contains the 
-          actual data formatted as a data.frame. The second contains the 
-          units to the corresponding columns of the data.frame. The third
-          contains the type of data (here: 'swat'; can also be 'mom').
+          (out$units), and two character variables (out$format and
+          out$tstep). The first contains the actual data formatted as a 
+          data.frame. The second contains the units to the corresponding 
+          columns of the data.frame. The third contains the source/format 
+          of data (here: 'swat'; can also be 'mom'). The fourth contains
+          information on the time step of the data (resp.: on which time
+          interval they are averaged).
 }
 \description{
 This function reads data from an already opened SWAT reach (*.rch) file of 
@@ -38,4 +48,10 @@ the SWAT 2012 format.
   # close file
   close(fileHandle)
   
+}
+\seealso{
+read.swat, read.river.mom
+}
+\author{
+Daniel Neumann, daniel.neumann@io-warnemuende.de
 }

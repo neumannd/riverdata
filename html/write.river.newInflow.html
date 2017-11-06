@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates a new riverinflow* file for the HBM model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.river.newInflow"><tr><td>write.river.newInflow</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates a new riverinflow* file for the HBM model</h2>
+
+<h3>Description</h3>
+
+<p>A new text file is created. The first row contains &quot; DAILY RIVER RUNOFF&quot; and
+the second row &quot;[date in format 'YYYY.MM.DD hh:mm:ss'] [annual inflow 1] [annual inflow 2]&quot;
+The 'annual inflow n' has to be printed in the Fortran format 'F8.6' 
+(width=8; 6 digits in front of the '.'). One file is created per day.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.river.newInflow(riverInfo, riverData, dOt, year, month = 0, day = 0,
+  overwrite = TRUE, warn = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>riverInfo</code></td>
+<td>
+<p>list with grid information</p>
+</td></tr>
+<tr valign="top"><td><code>riverData</code></td>
+<td>
+<p>list with river inflow data</p>
+</td></tr>
+<tr valign="top"><td><code>dOt</code></td>
+<td>
+<p>character; directory into which the final file should be written</p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>integer; year to write out</p>
+</td></tr>
+<tr valign="top"><td><code>month</code></td>
+<td>
+<p>integer; month to write out; if month==0 =&gt; write all months</p>
+</td></tr>
+<tr valign="top"><td><code>day</code></td>
+<td>
+<p>integer; day to write out; if day==0 =&gt; write all days</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>logical; overwrite 'dOt/filename' it already exists</p>
+</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+<p>logical; allow/suppress warnings</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>file written
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>write.river.append2Inflow, write.river.newNML, write.river.netCDF
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  
+  # interpolate from monthly to daily
+  test.mom.daily &lt;- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
+  
+  # get grid info
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # get river infos
+  file &lt;- 'files/river_list.dat'
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+  # write new namelist
+  write.river.newNML(riverInfos$Warnow, test.mom.daily, 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+  
+
+ ## example file content
+ # DAILY RIVER RUNOFF
+ # 2012.07.27 12:00:00     2.1
+ 
+</pre>
+
+
+</body></html>

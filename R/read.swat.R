@@ -10,16 +10,20 @@
 #' @param variables character array of variable names (==columns) to read in from the file; if == NULL [default], all variables are read
 #'
 #' @return list containing a data.frame (out$data), a character array 
-#'           (out$units), and a character (out$type). The first contains the 
-#'           actual data formatted as a data.frame (more details below). The 
-#'           second contains the units to the corresponding columns of the 
-#'           data.frame. The third contains the type of data (here: 'swat'; 
-#'           can also be 'mom').
+#'           (out$units), and two character variables (out$format and
+#'           out$tstep). The first contains the actual data formatted as a 
+#'           data.frame. The second contains the units to the corresponding 
+#'           columns of the data.frame. The third contains the source/format 
+#'           of data (here: 'swat'; can also be 'mom'). The fourth contains
+#'           information on the time step of the data (resp.: on which time
+#'           interval they are averaged).
 #'           
 #'           The data.frame out$data which contains the data from the file 
 #'           'filename'; column names of as.data.frame should be equal to 
 #'           column names in the reach file; only variables/columns listed 
 #'           in 'variables' are returned;
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.swat.data.rch.2012, read.river.mom
 #' @export
 #'
 #' @examples
@@ -127,7 +131,6 @@ read.swat <- function(filename, filetype = substr(filename,nchar(filename)-2,nch
     close(fileHandle)
     stop(paste0('read.swat stop: version ', version, ' not supported.'))
   }
-
   
   # return output ----
   return(data.out)

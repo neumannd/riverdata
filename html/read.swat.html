@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reads in a SWAT output file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read.swat"><tr><td>read.swat</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reads in a SWAT output file</h2>
+
+<h3>Description</h3>
+
+<p>Reads a SWAT output file of the *.rch (reach), *.sub, and *.hru formats. 
+Currently, only the formats as documented in the SWAT 2012 handbook are 
+supported.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read.swat(filename, filetype = substr(filename, nchar(filename) - 2,
+  nchar(filename)), version = 2016, variables = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>filename</code></td>
+<td>
+<p>character: name of the SWAT file</p>
+</td></tr>
+<tr valign="top"><td><code>filetype</code></td>
+<td>
+<p>character: official file extension of SWAT output file ('rch', 'sub', 'hru')</p>
+</td></tr>
+<tr valign="top"><td><code>version</code></td>
+<td>
+<p>integer/numeric: SWAT output version, only 2012 and 2016 (equal) are implemented</p>
+</td></tr>
+<tr valign="top"><td><code>variables</code></td>
+<td>
+<p>character array of variable names (==columns) to read in from the file; if == NULL [default], all variables are read</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list containing a data.frame (out$data), a character array 
+(out$units), and two character variables (out$format and
+out$tstep). The first contains the actual data formatted as a 
+data.frame. The second contains the units to the corresponding 
+columns of the data.frame. The third contains the source/format 
+of data (here: 'swat'; can also be 'mom'). The fourth contains
+information on the time step of the data (resp.: on which time
+interval they are averaged).
+</p>
+<p>The data.frame out$data which contains the data from the file 
+'filename'; column names of as.data.frame should be equal to 
+column names in the reach file; only variables/columns listed 
+in 'variables' are returned;
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>read.swat.data.rch.2012, read.river.mom
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  
+  # read in a swat *.rch (reach) file
+  data.swat &lt;- read.swat('output.rch')
+  
+  # read in a swat *.sub file
+  data.swat &lt;- read.swat('output.sub')
+  # NOTE: not implemented yet
+  
+  # read in a swat reach file with another file extension
+  data.swat &lt;- read.swat('output.txt', filetype = 'rch')
+  
+  # read in specific variables of a swat *.rch (reach) file
+  data.swat &lt;- read.swat('output.rch', variables = c('NO3_OUT', 'NH4_OUT'))
+  # NOTE: not implemented yet
+  
+</pre>
+
+
+</body></html>

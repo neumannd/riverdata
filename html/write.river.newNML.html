@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creates a new grid data namelist file for the HBM model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.river.newNML"><tr><td>write.river.newNML</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creates a new grid data namelist file for the HBM model</h2>
+
+<h3>Description</h3>
+
+<p>A new fortran namelist file is created. It contains the two nameslists
+'DIMENSIONS' and 'RIVERS'. 'RIVERS', contains the variables 'KRQI' and 
+'RWQI'. 'KRQI' contains the x- and y-coordinates of the grid cells, in 
+which the rivers enter the sea. 'RWQI' contains the actual inflow data 
+of each river.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.river.newNML(riverInfo, riverData, dOt, year, overwrite = TRUE,
+  warn = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>riverInfo</code></td>
+<td>
+<p>list with grid information</p>
+</td></tr>
+<tr valign="top"><td><code>riverData</code></td>
+<td>
+<p>list with river inflow data</p>
+</td></tr>
+<tr valign="top"><td><code>dOt</code></td>
+<td>
+<p>character; directory into which the final file should be written</p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>integer; year to write out</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>logical; overwrite 'dOt/filename' it already exists</p>
+</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+<p>logical; allow/suppress warnings</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>file written
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>write.river.netCDF, write.river.newInflow, write.river.append2NML
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'anual')
+  
+  # get grid info
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # get river infos
+  file &lt;- 'files/river_list.dat'
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+  # write new namelist
+  write.river.newNML(riverInfos$Warnow, test.mom.annual, 'out_dir', 2012, overwrite=FALSE)
+  
+
+  ## example content of an output file:
+  # &amp;DIMENSIONS
+  # EW=0, NS=0, LAYERS=0, NZBND=0, NUBND=0, NVBND=0, NRIVERS=1, NUDAMS=0, NVDAMS=0, NWEIRS=0
+  # /
+  # &amp;RIVERS
+  # KRQI=0, 0, 253, 289, RWQI=0.000000000000000000E+00, 3.53739587431693980
+  # /
+
+&amp;DIMENSIONS
+EW=630, NS=387, LAYERS=25, NZBND=858, NUBND=0, NVBND=0, NRIVERS=8, NUDAMS=0, NVDAMS=0, NWEIRS=0
+/
+&amp;RIVERS
+KRQI=0, 0, 341, 606, 376, 82, 386, 169, 364, 302, 263, 193, 84, 579, 26, 477, 65, 159, RWQI=0.000000000000000000E+00, 522.000000000000000, 100.000000000000000, 450.000000000000000, 90
+0.000000000000000, 37.0000000000000000, 48.0000000000000000, 21.0000000000000000, 125.000000000000000
+/
+
+TODOs:
+ - write NRIVERS in DIMENSIONS namelist
+ - write coordinates (grid cell indices!) and inflow to RIVERS:
+      --Y,X,VAL
+      --MONTHLY (m3/s)
+</pre>
+
+
+</body></html>

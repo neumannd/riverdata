@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Is a year a leap year?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for is.leapyear"><tr><td>is.leapyear</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Is a year a leap year?</h2>
+
+<h3>Description</h3>
+
+<p>Provides information (TRUE/FALSE) whether a year is a leap year (TRUE) or not (FALSE).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+is.leapyear(year)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>a numeric giving a year</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a logical. It is TRUE when 'year' is a leap year according to the Gregorian calender. Else it is false.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  is.leapyear(2012)
+  # return: TRUE
+  
+  is.leapyear(2001)
+  # return: FALSE
+  
+  is.leapyear(1998:2010)
+  # return: FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+</pre>
+
+
+</body></html>

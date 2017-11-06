@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read csv file with information on rivers and return it in a...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read.infos.rivers"><tr><td>read.infos.rivers</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read csv file with information on rivers and return it in a nested list</h2>
+
+<h3>Description</h3>
+
+<p>Columns in the csv file: id, name, lat, lon, grid, ycell, xcell, filename
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read.infos.rivers(filename, grids)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>filename</code></td>
+<td>
+<p>path and name of the csv file with river information</p>
+</td></tr>
+<tr valign="top"><td><code>grids</code></td>
+<td>
+<p>nested list with grid definitions: grids$fine and grids$coarse are grid definitions of the fine and coarse, respectively BSH-HBM grids</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Elements of the output list: filename, lon, lat, xcell, ycell, grid, riverid, rivername
+</p>
+
+
+<h3>Value</h3>
+
+<p>nested list with grid information it contains:
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>get.infos.grids.hbm.basic
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  
+  # get grid info:
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # set filename
+  file &lt;- 'files/river_list.dat'
+  
+  # get river infos
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+Elements of the output list:
+  filename
+  lon
+  lat
+  xcell
+  ycell
+  grid [fine,coarse]
+  riverid
+  rivername
+</pre>
+
+
+</body></html>

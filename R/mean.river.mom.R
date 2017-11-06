@@ -1,19 +1,36 @@
-#' Calculates annual mean values from MOM river input data
+#' Calculates mean values from MOM river input data
 #'
-#' TODO
+#' Calculates mean values from river inflow data. Currently, only averaging 
+#' from monthly to annual means is implemented.
 #'
-#' @param inData list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and a character (in$type).
-#' @param from character: current data averaging interval; e.g. 'annual', 'monthly', or 'daily'
+#' @param inData list containing a data.frame (in$data) with river inflow data, a character array (in$units) with corresponding units, and two character variables (in$format and in$tstep).
+#' @param from character: current data averaging interval; does not need to be set if in$tstep is set properly; if not, it can be manually set to e.g. 'annual', 'monthly', or 'daily'
 #' @param to character: future averaging interval; e.g. 'annual', 'monthly', or 'daily'
 #'
-#' @return list of newly averaged data; same structure as input data
+#' @return list of newly averaged data; same structure as input data; 
+#'
+#'           list containing a data.frame (out$data), a character array 
+#'           (out$units), and two character variables (out$format and
+#'           out$tstep). The first contains the actual data formatted as a 
+#'           data.frame. The second contains the units to the corresponding 
+#'           columns of the data.frame. The third contains the source/format 
+#'           of data (here: 'mom'; can also be 'swat'). The fourth contains
+#'           information on the time step of the data (resp.: on which time
+#'           interval they are averaged).
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
 #' @export
 #'
 #' @examples
 #' 
-#'   TODO
-mean.river.mom = function(inData, from='none', to='none') {
-  if ( tolower(inData$type) != 'mom' ) {
+#'   # read a file:
+#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   
+#'   # calculate annual means from monthly data
+#'   test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')
+#'   
+mean.river.mom = function(inData, from=inData$tstep, to='none') {
+  if ( tolower(inData$format) != 'mom' ) {
     stop('mean.river.mom stop: inData is no MOM data')
   }
   
@@ -71,8 +88,10 @@ mean.river.mom = function(inData, from='none', to='none') {
       otData = list()
       # copy units
       otData$units = inData$units
-      # copy type
-      otData$type = inData$otData
+      # copy format
+      otData$format = inData$otData
+      # set time step
+      otData$tstep = to
       # insert data
       otData$data <- cbind(formatC(minYear:maxYear, format = 'd', width = 4), tmp_valsY)
       names(otData$data)[1] <- 'time'

@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read data from a reach (RCH) SWAT output file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read.swat.data.rch.2012"><tr><td>read.swat.data.rch.2012</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read data from a reach (RCH) SWAT output file</h2>
+
+<h3>Description</h3>
+
+<p>This function reads data from an already opened SWAT reach (*.rch) file of 
+the SWAT 2012 format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read.swat.data.rch.2012(fileHandle, nrow.data, header = TRUE, nreach = 1,
+  ireach = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>fileHandle</code></td>
+<td>
+<p>open connection to a file; the pointer in the file has to 
+point to the header row if 'header=TRUE'; if 
+'header=FALSE' it has to point to the first data row</p>
+</td></tr>
+<tr valign="top"><td><code>nrow.data</code></td>
+<td>
+<p>number of data rows to read</p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+<p>logical: consider the first row as header row (or not) [default = TRUE]</p>
+</td></tr>
+<tr valign="top"><td><code>nreach</code></td>
+<td>
+<p>integer: number of reaches in the file</p>
+</td></tr>
+<tr valign="top"><td><code>ireach</code></td>
+<td>
+<p>integer: index of the reach's data to extract</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list containing a data.frame (out$data), a character array 
+(out$units), and two character variables (out$format and
+out$tstep). The first contains the actual data formatted as a 
+data.frame. The second contains the units to the corresponding 
+columns of the data.frame. The third contains the source/format 
+of data (here: 'swat'; can also be 'mom'). The fourth contains
+information on the time step of the data (resp.: on which time
+interval they are averaged).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>read.swat, read.river.mom
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  
+  # open file
+  fileHandle &lt;- file('output.rch', open="rt")
+  
+  # skip first 8 lines of meta data
+  tmp &lt;- readLines(fileHandle, n = 8)
+  
+  # read 100 lines of data
+  data.out &lt;- read.swat.data.2012(fileHandle, 100)
+  
+  # close file
+  close(fileHandle)
+  
+</pre>
+
+
+</body></html>

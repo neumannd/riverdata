@@ -7,14 +7,22 @@
 #'                    point to the header row if 'header=TRUE'; if 
 #'                    'header=FALSE' it has to point to the first data row
 #' @param nrow.data number of data rows to read
+#' @param header logical: consider the first row as header row (or not) [default = TRUE]
+#' @param nreach integer: number of reaches in the file
+#' @param ireach integer: index of the reach's data to extract
 #'
 #' @return list containing a data.frame (out$data), a character array 
-#'           (out$units), and a character (out$type). The first contains the 
-#'           actual data formatted as a data.frame. The second contains the 
-#'           units to the corresponding columns of the data.frame. The third
-#'           contains the type of data (here: 'swat'; can also be 'mom').
+#'           (out$units), and two character variables (out$format and
+#'           out$tstep). The first contains the actual data formatted as a 
+#'           data.frame. The second contains the units to the corresponding 
+#'           columns of the data.frame. The third contains the source/format 
+#'           of data (here: 'swat'; can also be 'mom'). The fourth contains
+#'           information on the time step of the data (resp.: on which time
+#'           interval they are averaged).
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.swat, read.river.mom
 #' @export
-#'
+#' 
 #' @examples
 #'   
 #'   # open file
@@ -29,7 +37,11 @@
 #'   # close file
 #'   close(fileHandle)
 #'   
-read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE) {
+read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE, nreach = 1, ireach = 1) {
+  
+  if (ireach > nreach) {
+    step('read.swat.data.rch.2012 stop: ireach > nreach; ireach has to be lower-equal than nreach.')
+  }
   
   # column indices; first column is the start index and the second column the end index
   ncol = 49
@@ -135,7 +147,9 @@ read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE) {
                       'kg N',
                       'kg P',
                       'mg NO3-N/kg sed')
-  data.out$type = 'swat'
+  data.out$format = 'swat'
+  otData$tstep = 'annual'
+  warning('read.swat.data.rch.2012 warning: tstep might not be properly set')
   
   # expected default header
   str.header.dflt <- '       RCH      GIS   MON     AREAkm2  FLOW_INcms FLOW_OUTcms     EVAPcms    TLOSScms  SED_INtons SED_OUTtons SEDCONCmg/L   ORGN_INkg  ORGN_OUTkg   ORGP_INkg  ORGP_OUTkg    NO3_INkg   NO3_OUTkg    NH4_INkg   NH4_OUTkg    NO2_INkg   NO2_OUTkg   MINP_INkg  MINP_OUTkg   CHLA_INkg  CHLA_OUTkg   CBOD_INkg  CBOD_OUTkg  DISOX_INkg DISOX_OUTkg SOLPST_INmgSOLPST_OUTmg SORPST_INmgSORPST_OUTmg  REACTPSTmg    VOLPSTmg  SETTLPSTmgRESUSP_PSTmgDIFFUSEPSTmgREACBEDPSTmg   BURYPSTmg   BED_PSTmg BACTP_OUTctBACTLP_OUTct  CMETAL#1kg  CMETAL#2kg  CMETAL#3kg     TOT Nkg     TOT Pkg NO3ConcMg/l    WTMPdegc'
@@ -161,17 +175,21 @@ read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE) {
   
   
   # read the data
+  irow.out = 1
   for (irow in 1:nrow.data) {
     str.tmp <- readLines(fileHandle, n = 1L)
     
     # copy integers (first three columns)
-    for (icol in 1:3) {
-      data.out$data[irow, icol] = strtoi(substr(str.tmp, int.cols[icol, 1], int.cols[icol, 2]))
-    }
-    
-    # copy numerics/floats/doubles
-    for (icol in 4:ncol) {
-      data.out$data[irow, icol] = as.numeric(substr(str.tmp, int.cols[icol, 1], int.cols[icol, 2]))
+    # if we are in a row that should be written out
+    if ( ((irow-1)%%nreach)+1 == ireach ) {
+      for (icol in 1:3) {
+        data.out$data[irow.out, icol] = strtoi(substr(str.tmp, int.cols[icol, 1], int.cols[icol, 2]))
+      }
+      
+      # copy numerics/floats/doubles
+      for (icol in 4:ncol) {
+        data.out$data[irow.out, icol] = as.numeric(substr(str.tmp, int.cols[icol, 1], int.cols[icol, 2]))
+      }
     }
   }
   

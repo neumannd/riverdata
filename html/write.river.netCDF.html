@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Write netCDF files (one for each river) with riverine...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.river.netCDF"><tr><td>write.river.netCDF</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Write netCDF files (one for each river) with riverine nutrient input data</h2>
+
+<h3>Description</h3>
+
+<p>For each entry in 'riverNames' a netCDF file is created. TODO
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.river.netCDF(riverNames, riverInfo, riverData, netCDF2input, dOt, year,
+  overwrite = TRUE, warn = TRUE, cmd_ncgen = "ncgen")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>riverNames</code></td>
+<td>
+<p>character array with river names</p>
+</td></tr>
+<tr valign="top"><td><code>riverInfo</code></td>
+<td>
+<p>list() of grid-information-lists(); to each element in riverNames one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>riverData</code></td>
+<td>
+<p>list() of river-inflow-data-lists(); to each element in riverData one list element with the same name needs to exist in riverInfos</p>
+</td></tr>
+<tr valign="top"><td><code>netCDF2input</code></td>
+<td>
+<p>list() with two character arrays netCDF2input$untagged and netCDF2input$tagged; these contain the names of rivers, which are tagged and untagged, respectively</p>
+</td></tr>
+<tr valign="top"><td><code>dOt</code></td>
+<td>
+<p>character; directory into which the final file should be written</p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>integer; year to write out</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>logical; overwrite 'dOt/filename' it already exists</p>
+</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+<p>logical; allow/suppress warnings</p>
+</td></tr>
+<tr valign="top"><td><code>cmd_ncgen</code></td>
+<td>
+<p>character: ncgen-call; if ncgen is not in the path (or the wrong verson of ncgen) please provide here '/path/ncgen-exec' for the ncgen binary</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Neumann, daniel.neumann@io-warnemuende.de
+</p>
+
+
+<h3>See Also</h3>
+
+<p>write.river.newNML, write.river.newInflow
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  # read a file:
+  test.mom.monthly &lt;- list()
+  test.mom.monthly$Warnow &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly$Trave &lt;- read.mom('files/GER_Dan_Str_Trave.dat')
+  
+  # calculate annual means from monthly data
+  test.mom.annual &lt;- list()
+  test.mom.daily$Warnow &lt;- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
+  test.mom.daily$Trave &lt;- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
+  
+  # get netCDF file variable mapping
+  varmapping.hbm &lt;- get.varmapping.hbm.netcdf()
+  
+  # get grid info
+  grid_info &lt;- get.infos.grids.hbm.basic()
+  
+  # get river infos
+  file &lt;- 'files/river_list.dat'
+  riverInfos &lt;- read.infos.rivers(file, grid_info)
+  
+  # write new namelist
+  write.river.netCDF(c('Warnow', 'Trave'), riverInfos, test.mom.daily, varmapping.hbm, dOt, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+
+ input vals: mol/kg
+ output vals: mmol/m3
+ output = input * 20^6
+</pre>
+
+
+</body></html>

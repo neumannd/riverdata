@@ -24,6 +24,9 @@
 #'   grid <- list(lon = list(lonw=-5.0, lone=10.0, dlon=0.5),
 #'               lat = list(lats=49.0, latn=65.0, dlat=0.5, nlat=(65.0-49.0)/0.5))
 #'   
+#'   # OR
+#'   # grid <- get.infos.grids.hbm.basic()$coarse
+#'   
 #'   # some coordinates
 #'   lon <- c(-4.9, -4.1, 5.6)
 #'   lat <- c(64.9, 64.9, 53.2)

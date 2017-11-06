@@ -17,6 +17,8 @@
 #'           of data (here: 'mom'; can also be 'swat'). The fourth contains
 #'           information on the time step of the data (resp.: on which time
 #'           interval they are averaged).
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
 #' @export
 #'
 #' @examples

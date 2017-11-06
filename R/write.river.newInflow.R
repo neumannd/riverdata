@@ -15,6 +15,8 @@
 #' @param warn logical; allow/suppress warnings
 #'
 #' @return file written
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso write.river.append2Inflow, write.river.newNML, write.river.netCDF
 #' @export
 #'
 #' @examples

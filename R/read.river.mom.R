@@ -14,6 +14,8 @@
 #'           of data (here: 'mom'; can also be 'swat'). The fourth contains
 #'           information on the time step of the data (resp.: on which time
 #'           interval they are averaged). The latter is set to 'monthly'.
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.swat, read.swat.data.rch.2012
 #' @export
 #'
 #' @examples

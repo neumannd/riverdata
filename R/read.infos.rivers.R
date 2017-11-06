@@ -8,6 +8,8 @@
 #' @param grids nested list with grid definitions: grids$fine and grids$coarse are grid definitions of the fine and coarse, respectively BSH-HBM grids
 #' 
 #' @return nested list with grid information it contains:
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso get.infos.grids.hbm.basic
 #' @export
 #' 
 #' @examples

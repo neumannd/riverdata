@@ -19,6 +19,8 @@
 #'           of data (here: 'swat'; can also be 'mom'). The fourth contains
 #'           information on the time step of the data (resp.: on which time
 #'           interval they are averaged).
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.swat, read.river.mom
 #' @export
 #' 
 #' @examples

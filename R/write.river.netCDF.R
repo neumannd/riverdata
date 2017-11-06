@@ -13,6 +13,8 @@
 #' @param cmd_ncgen character: ncgen-call; if ncgen is not in the path (or the wrong verson of ncgen) please provide here '/path/ncgen-exec' for the ncgen binary
 #'
 #' @return
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso write.river.newNML, write.river.newInflow
 #' @export
 #'
 #' @examples

@@ -4,6 +4,8 @@
 #' to corresponding short names, which are often used. 
 #'
 #' @return nested lists; look at the output yourself
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso write.river.netCDF
 #' @export
 #'
 #' @examples

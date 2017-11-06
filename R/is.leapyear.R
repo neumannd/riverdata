@@ -5,8 +5,8 @@
 #' @param year a numeric giving a year
 #'
 #' @return Returns a logical. It is TRUE when 'year' is a leap year according to the Gregorian calender. Else it is false.
-#' @export
 #' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @export
 #'
 #' @examples
 #'   is.leapyear(2012)

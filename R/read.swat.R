@@ -22,6 +22,8 @@
 #'           'filename'; column names of as.data.frame should be equal to 
 #'           column names in the reach file; only variables/columns listed 
 #'           in 'variables' are returned;
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
+#' @seealso read.swat.data.rch.2012, read.river.mom
 #' @export
 #'
 #' @examples

@@ -3,6 +3,7 @@
 #' Get basic grid data of the BSH-setup for HBM
 #'
 #' @return list with grid information (see yourself)
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
 #' @export
 #'
 #' @examples

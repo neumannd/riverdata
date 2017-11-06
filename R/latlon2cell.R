@@ -16,6 +16,7 @@
 #' @param grid grid definition (see description or example for structure)
 #'
 #' @return list('x'=..., 'y'=...); list of x- and y-coordinates of the grid cells
+#' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
 #' @export
 #'
 #' @examples

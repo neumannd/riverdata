@@ -21,27 +21,27 @@
 #' @examples
 #' 
 #'   # grid definition
-#'   grid = list(lon = list(lonw=-5.0, lone=10.0, dlon=0.5),
+#'   grid <- list(lon = list(lonw=-5.0, lone=10.0, dlon=0.5),
 #'               lat = list(lats=49.0, latn=65.0, dlat=0.5, nlat=(65.0-49.0)/0.5))
 #'   
 #'   # some coordinates
-#'   lon = c(-4.9, -4.1, 5.6)
-#'   lat = c(64.9, 64.9, 53.2)
+#'   lon <- c(-4.9, -4.1, 5.6)
+#'   lat <- c(64.9, 64.9, 53.2)
 #'   
 #'   # get grid cells 
-#'   grid_cells = latlon2cell(lat, lon, grid)
+#'   grid_cells <- latlon2cell(lat, lon, grid)
 #'   # result should be:
 #'   #  - grid_cells$x: 1, 2, 22
 #'   #  - grid_cells$y: 1, 1, 24
 #'   
-latlon2cell = function(lat, lon, grid) {
-  x = -1
-  y = -1
+latlon2cell <- function(lat, lon, grid) {
+  x <- -1
+  y <- -1
   
   if ( lon > grid$lon$lonw && lon < grid$lon$lone &&
        lat > grid$lat$lats && lat < grid$lat$latn) {
-    x = floor((lon - grid$lon$lonw) / grid$lon$dlon) + 1
-    y = grid$lat$nlat - floor((lat - grid$lat$lats) / grid$lat$dlat)
+    x <- floor((lon - grid$lon$lonw) / grid$lon$dlon) + 1
+    y <- grid$lat$nlat - floor((lat - grid$lat$lats) / grid$lat$dlat)
   }
   
   return(list('x' = x, 'y' = y))

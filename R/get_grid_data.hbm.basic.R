@@ -10,7 +10,7 @@
 #'   # get grid information
 #'   grid_info <- get_grid_data.hbm.basic()
 #'   
-get_grid_data.hbm.basic = function() {
+get_grid_data.hbm.basic <- function() {
 
   grids <- list('fine'=list('lon' = list('lon0'=6+10/60+25/60/60, 'dlon'=5/6/60,
                                         'nlon'=630, 'len' = 630, 

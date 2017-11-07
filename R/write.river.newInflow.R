@@ -36,7 +36,7 @@
 #'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.newNML(riverInfos$Warnow, test.mom.daily, 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#'   write.river.newInflow(riverInfos$Warnow, test.mom.daily, 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
 #'   
 #' 
 #'  ## example file content

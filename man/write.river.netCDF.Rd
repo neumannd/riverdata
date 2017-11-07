@@ -26,6 +26,9 @@ write.river.netCDF(riverNames, riverInfo, riverData, netCDF2input, dOt, year,
 
 \item{cmd_ncgen}{character: ncgen-call; if ncgen is not in the path (or the wrong verson of ncgen) please provide here '/path/ncgen-exec' for the ncgen binary}
 }
+\value{
+file written
+}
 \description{
 For each entry in 'riverNames' a netCDF file is created. TODO
 }

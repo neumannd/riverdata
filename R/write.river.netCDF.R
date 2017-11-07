@@ -12,7 +12,7 @@
 #' @param warn logical; allow/suppress warnings
 #' @param cmd_ncgen character: ncgen-call; if ncgen is not in the path (or the wrong verson of ncgen) please provide here '/path/ncgen-exec' for the ncgen binary
 #'
-#' @return
+#' @return file written
 #' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
 #' @seealso write.river.newNML, write.river.newInflow
 #' @export

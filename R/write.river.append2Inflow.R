@@ -29,7 +29,7 @@
 #'   test.mom.monthly$Trave <- read.river.mom('files/GER_Dan_Str_Trave.dat')
 #'   
 #'   # calculate annual means from monthly data
-#'   test.mom.annual <- list()
+#'   test.mom.daily <- list()
 #'   test.mom.daily$Warnow <- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
 #'   test.mom.daily$Trave <- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
 #'   
@@ -39,6 +39,7 @@
 #'   # get river infos
 #'   file <- 'files/river_list.dat'
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
 #'   write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)

@@ -32,6 +32,7 @@
 #'   # get river infos
 #'   file <- 'files/river_list.dat'
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
 #'   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'out_dir', 2012, overwrite=FALSE)

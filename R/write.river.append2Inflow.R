@@ -42,7 +42,7 @@
 #'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#'   write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, grid_info, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
 #'   
 write.river.append2Inflow = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, month=0, day=0, overwrite=TRUE, warn=TRUE) {
   

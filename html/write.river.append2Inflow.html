@@ -97,11 +97,11 @@ write.river.append2Inflow(riverNames, riverInfos, riverData, grids, dIn, dOt,
 
   # read a file:
   test.mom.monthly &lt;- list()
-  test.mom.monthly$Warnow &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
-  test.mom.monthly$Trave &lt;- read.mom('files/GER_Dan_Str_Trave.dat')
+  test.mom.monthly$Warnow &lt;- read.river.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly$Trave &lt;- read.river.mom('files/GER_Dan_Str_Trave.dat')
   
   # calculate annual means from monthly data
-  test.mom.annual &lt;- list()
+  test.mom.daily &lt;- list()
   test.mom.daily$Warnow &lt;- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
   test.mom.daily$Trave &lt;- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
   
@@ -111,9 +111,10 @@ write.river.append2Inflow(riverNames, riverInfos, riverData, grids, dIn, dOt,
   # get river infos
   file &lt;- 'files/river_list.dat'
   riverInfos &lt;- read.infos.rivers(file, grid_info)
+  # (you will get some warnings here)
   
   # write new namelist
-  write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+  write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, grid_info, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
   
 </pre>
 

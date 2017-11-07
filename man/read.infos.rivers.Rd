@@ -30,6 +30,7 @@ Elements of the output list: filename, lon, lat, xcell, ycell, grid, riverid, ri
   
   # get river infos
   riverInfos <- read.infos.rivers(file, grid_info)
+  # (you will get some warnings here)
   
 Elements of the output list:
   filename

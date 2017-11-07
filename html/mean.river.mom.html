@@ -63,7 +63,7 @@ interval they are averaged).
 
 <h3>See Also</h3>
 
-<p>read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
+<p>read.river.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
 </p>
 
 
@@ -72,10 +72,10 @@ interval they are averaged).
 <pre>
 
   # read a file:
-  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly &lt;- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # calculate annual means from monthly data
-  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'anual')
+  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'annual')
   
 </pre>
 

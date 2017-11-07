@@ -68,7 +68,7 @@ interval they are averaged).
 
 <h3>See Also</h3>
 
-<p>read.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
+<p>read.river.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
 </p>
 
 
@@ -77,7 +77,7 @@ interval they are averaged).
 <pre>
 
   # read a file:
-  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly &lt;- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # interpolate from monthly to daily
   test.mom.daily &lt;- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')

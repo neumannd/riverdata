@@ -49,7 +49,7 @@ write.river.append2Inflow = function(riverNames, riverInfos, riverData, grids, d
   
   # initialize variables ----
   # unit: (m3/s)
-  strYear='2012'
+  strYear=formatC(year, format='d', width=4)
   nDaysM = c(31,28+ifelse(is.leapyear(year),1,0),31,30,31,30,31,31,30,31,30,31)
   strDays = list()
   

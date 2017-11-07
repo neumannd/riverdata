@@ -47,19 +47,19 @@ read.river.mom = function(filename) {
   
   ## write output data
   # create list for output
-  data.out = list()
+  otData = list()
   # add a list entry for the data (a data.frame)
-  data.out$data = cbind(varTime, rawData[,7:(6+nVar)])
+  otData$data = cbind(varTime, rawData[,7:(6+nVar)])
   # set column/variable names in the data.frame
-  names(data.out$data) = c('time', varName)
+  names(otData$data) = c('time', varName)
   # add another list entry containing the units
-  data.out$units = c('time', varUnit)
+  otData$units = c('time', varUnit)
   # source format of data
-  data.out$format = 'mom'
+  otData$format = 'mom'
   # set time step
   otData$tstep = 'monthly'
   
   # return data
-  return(data.out)
+  return(otData)
 }
 

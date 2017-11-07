@@ -43,7 +43,7 @@
 #'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.newNML(c('Warnow', 'Trave'), grid_info, test.mom.annual, 'files', 'out_dir', 2012, overwrite=FALSE)
+#'   write.river.append2NML(c('Warnow', 'Trave'), riverInfos, test.mom.annual, grid_info, 'files', 'out_dir', 2012, overwrite=FALSE)
 #'   
 #'   ## NAMELIST example: data_GRID_RIVER.nml
 #'   # &DIMENSIONS
@@ -120,8 +120,9 @@ write.river.append2NML = function(riverNames, riverInfos, riverData, grids, dIn,
                                 formatC(riverInfos[[iR]]$ycell, format='d'), 
                                 formatC(riverInfos[[iR]]$xcell, format='d'), 
                                 sep = ', ')
+
     RWQI[[iG]] = paste(RWQI[[iG]], 
-                                formatC(valOt, format='f', width = 19, digits = 18-ceiling(log10(valOt))), 
+                                formatC(valOt, format='f', width = 19, digits = 18-ceiling(pmax(1,log10(valOt)))), 
                                 sep = ', ')
   }
   

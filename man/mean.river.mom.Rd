@@ -32,14 +32,14 @@ from monthly to annual means is implemented.
 \examples{
 
   # read a file:
-  test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # calculate annual means from monthly data
-  test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')
+  test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'annual')
   
 }
 \seealso{
-read.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
+read.river.mom, write.river.append2NML, write.river.newNML, interpolate.river.mom
 }
 \author{
 Daniel Neumann, daniel.neumann@io-warnemuende.de

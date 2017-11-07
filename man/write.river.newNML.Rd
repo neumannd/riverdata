@@ -33,10 +33,10 @@ of each river.
 \examples{
 
   # read a file:
-  test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # calculate annual means from monthly data
-  test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')
+  test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'annual')
   
   # get grid info
   grid_info <- get.infos.grids.hbm.basic()
@@ -44,6 +44,7 @@ of each river.
   # get river infos
   file <- 'files/river_list.dat'
   riverInfos <- read.infos.rivers(file, grid_info)
+  # (you will get some warnings here)
   
   # write new namelist
   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'out_dir', 2012, overwrite=FALSE)

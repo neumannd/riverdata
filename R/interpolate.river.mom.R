@@ -20,13 +20,13 @@
 #'           information on the time step of the data (resp.: on which time
 #'           interval they are averaged).
 #' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
-#' @seealso read.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
+#' @seealso read.river.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
 #' @export
 #'
 #' @examples
 #' 
 #'   # read a file:
-#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
 #'   # interpolate from monthly to daily
 #'   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
@@ -51,15 +51,15 @@ interpolate.river.mom <- function(inData, from=inData$tstep, to='none', method =
   } else {
     
     ## testing:
-    inData <- list(data = as.data.frame(cbind(as.POSIXct(c('1995-10-16 00:00 GMT', '1995-11-16 00:00 GMT',
-                                                          '1995-12-16 00:00 GMT', '1996-01-16 00:00 GMT',
-                                                          '1996-02-16 00:00 GMT', '1996-03-16 00:00 GMT',
-                                                          '1996-04-16 00:00 GMT', '1996-05-16 00:00 GMT',
-                                                          '1996-06-16 00:00 GMT', '1996-07-16 00:00 GMT')),
-                                             as.data.frame(array(c(2,3,4,4,2,1,1,5,6,5), dim = c(10,1))))),
-                  units = c('time', 'kg'),
-                  format = 'mom')
-    names(inData$data) <- c('time', 'var')
+    # inData <- list(data = as.data.frame(cbind(as.POSIXct(c('1995-10-16 00:00 GMT', '1995-11-16 00:00 GMT',
+    #                                                       '1995-12-16 00:00 GMT', '1996-01-16 00:00 GMT',
+    #                                                       '1996-02-16 00:00 GMT', '1996-03-16 00:00 GMT',
+    #                                                       '1996-04-16 00:00 GMT', '1996-05-16 00:00 GMT',
+    #                                                       '1996-06-16 00:00 GMT', '1996-07-16 00:00 GMT')),
+    #                                          as.data.frame(array(c(2,3,4,4,2,1,1,5,6,5), dim = c(10,1))))),
+    #               units = c('time', 'kg'),
+    #               format = 'mom')
+    # names(inData$data) <- c('time', 'var')
     
     
     if (from == 'monthly' && to == 'daily') {
@@ -78,13 +78,26 @@ interpolate.river.mom <- function(inData, from=inData$tstep, to='none', method =
       if (method == 'step') {
         midPoint <- array(0.0, dim = c(nTime,nVars))
         crossPoint <- array(0.0, dim = c(nTime+1,nVars))
-        midPoint <- rbind(inData$data[1,-1]*1.1             - inData$data[2,-1]*0.1,
-                         array(inData$data[c(-1,-nTime),-1]*1.25 - inData$data[c(-1,-2),-1]*0.125 - inData$data[c(-nTime+1,-nTime),-1]*0.125, dim = c(nTime-2, nVars)),
-                         inData$data[nTime,-1]*1.1         - inData$data[nTime-1,-1]*0.1)
-        crossPoint <- rbind(midPoint[1,],
-                           array((inData$data[-nTime,-1] + inData$data[-1,-1])*0.5, dim = c(nTime-1, nVars)),
-                           midPoint[nTime,])
-        
+        # we need to distinguish two cases here:
+        #  (a) if inData$data[,-1] has only one column, rbind does not work 
+        #       properly because inData$data[c(-1,-nTime),-1] is considered 
+        #       as one row.
+        #  (b) if inData$data[,-1] has more than one column, we use rbind
+        if ( dim(inData$data[,-1])[2] == 1 ) {
+          midPoint <- rbind(inData$data[1,-1]*1.1             - inData$data[2,-1]*0.1,
+                           array(inData$data[c(-1,-nTime),-1]*1.25 - inData$data[c(-1,-2),-1]*0.125 - inData$data[c(-nTime+1,-nTime),-1]*0.125, dim = c(nTime-2, nVars)),
+                           inData$data[nTime,-1]*1.1         - inData$data[nTime-1,-1]*0.1)
+          crossPoint <- rbind(midPoint[1,],
+                             array((inData$data[-nTime,-1] + inData$data[-1,-1])*0.5, dim = c(nTime-1, nVars)),
+                             midPoint[nTime,])
+        } else {
+          midPoint <- rbind(inData$data[1,-1]*1.1             - inData$data[2,-1]*0.1,
+                            inData$data[c(-1,-nTime),-1]*1.25 - inData$data[c(-1,-2),-1]*0.125 - inData$data[c(-nTime+1,-nTime),-1]*0.125,
+                            inData$data[nTime,-1]*1.1         - inData$data[nTime-1,-1]*0.1)
+          crossPoint <- rbind(midPoint[1,],
+                              (inData$data[-nTime,-1] + inData$data[-1,-1])*0.5,
+                              midPoint[nTime,])
+        }
         startDate <- as.character(inData$data$time[1])
         substr(startDate,9,10) <- '01'
         endDate <- as.character(inData$data$time[nTime])

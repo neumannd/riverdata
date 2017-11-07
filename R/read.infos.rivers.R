@@ -22,6 +22,7 @@
 #'   
 #'   # get river infos
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 read.infos.rivers <- function(filename, grids) {
   #' Elements of the output list:

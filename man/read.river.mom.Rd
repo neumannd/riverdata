@@ -27,7 +27,7 @@ also contains units corresponding to the columns of the data.frame.
 \examples{
 
   # read a file:
-  test.mom <- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
 }
 \seealso{

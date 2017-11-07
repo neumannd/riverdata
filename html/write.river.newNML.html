@@ -78,10 +78,10 @@ write.river.newNML(riverInfo, riverData, dOt, year, overwrite = TRUE,
 <pre>
 
   # read a file:
-  test.mom.monthly &lt;- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly &lt;- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # calculate annual means from monthly data
-  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'anual')
+  test.mom.annual &lt;- mean.river.mom(test.mom.monthly, to = 'annual')
   
   # get grid info
   grid_info &lt;- get.infos.grids.hbm.basic()
@@ -89,6 +89,7 @@ write.river.newNML(riverInfo, riverData, dOt, year, overwrite = TRUE,
   # get river infos
   file &lt;- 'files/river_list.dat'
   riverInfos &lt;- read.infos.rivers(file, grid_info)
+  # (you will get some warnings here)
   
   # write new namelist
   write.river.newNML(riverInfos$Warnow, test.mom.annual, 'out_dir', 2012, overwrite=FALSE)

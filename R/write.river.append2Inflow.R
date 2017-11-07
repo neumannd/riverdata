@@ -25,11 +25,11 @@
 #' 
 #'   # read a file:
 #'   test.mom.monthly <- list()
-#'   test.mom.monthly$Warnow <- read.mom('files/GER_Dan_Str_Warnow.dat')
-#'   test.mom.monthly$Trave <- read.mom('files/GER_Dan_Str_Trave.dat')
+#'   test.mom.monthly$Warnow <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly$Trave <- read.river.mom('files/GER_Dan_Str_Trave.dat')
 #'   
 #'   # calculate annual means from monthly data
-#'   test.mom.annual <- list()
+#'   test.mom.daily <- list()
 #'   test.mom.daily$Warnow <- interpolate.river.mom(test.mom.monthly$Warnow, to = 'daily', method = 'step')
 #'   test.mom.daily$Trave <- interpolate.river.mom(test.mom.monthly$Trave, to = 'daily', method = 'step')
 #'   
@@ -39,16 +39,17 @@
 #'   # get river infos
 #'   file <- 'files/river_list.dat'
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#'   write.river.append2Inflow(c('Warnow', 'Trave'), riverInfos, test.mom.daily, grid_info, 'files', 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
 #'   
 write.river.append2Inflow = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, month=0, day=0, overwrite=TRUE, warn=TRUE) {
   
   
   # initialize variables ----
   # unit: (m3/s)
-  strYear='2012'
+  strYear=formatC(year, format='d', width=4)
   nDaysM = c(31,28+ifelse(is.leapyear(year),1,0),31,30,31,30,31,31,30,31,30,31)
   strDays = list()
   

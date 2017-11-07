@@ -22,7 +22,7 @@
 #' @examples
 #' 
 #'   # read a file:
-#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
 #'   # interpolate from monthly to daily
 #'   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
@@ -33,9 +33,10 @@
 #'   # get river infos
 #'   file <- 'files/river_list.dat'
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.newNML(riverInfos$Warnow, test.mom.daily, 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
+#'   write.river.newInflow(riverInfos$Warnow, test.mom.daily, 'out_dir', 2012, month = 1, day = 1:5, overwrite=FALSE)
 #'   
 #' 
 #'  ## example file content

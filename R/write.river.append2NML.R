@@ -26,13 +26,13 @@
 #' 
 #'   # read a file:
 #'   test.mom.monthly <- list()
-#'   test.mom.monthly$Warnow <- read.mom('files/GER_Dan_Str_Warnow.dat')
-#'   test.mom.monthly$Trave <- read.mom('files/GER_Dan_Str_Trave.dat')
+#'   test.mom.monthly$Warnow <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly$Trave <- read.river.mom('files/GER_Dan_Str_Trave.dat')
 #'   
 #'   # calculate annual means from monthly data
 #'   test.mom.annual <- list()
-#'   test.mom.annual$Warnow <- mean.river.mom(test.mom.monthly$Warnow, to = 'anual')
-#'   test.mom.annual$Trave <- mean.river.mom(test.mom.monthly$Trave, to = 'anual')
+#'   test.mom.annual$Warnow <- mean.river.mom(test.mom.monthly$Warnow, to = 'annual')
+#'   test.mom.annual$Trave <- mean.river.mom(test.mom.monthly$Trave, to = 'annual')
 #'   
 #'   # get grid info
 #'   grid_info <- get.infos.grids.hbm.basic()
@@ -40,26 +40,20 @@
 #'   # get river infos
 #'   file <- 'files/river_list.dat'
 #'   riverInfos <- read.infos.rivers(file, grid_info)
+#'   # (you will get some warnings here)
 #'   
 #'   # write new namelist
-#'   write.river.newNML(c('Warnow', 'Trave'), grid_info, test.mom.annual, 'files', 'out_dir', 2012, overwrite=FALSE)
+#'   write.river.append2NML(c('Warnow', 'Trave'), riverInfos, test.mom.annual, grid_info, 'files', 'out_dir', 2012, overwrite=FALSE)
 #'   
+#'   ## NAMELIST example: data_GRID_RIVER.nml
+#'   # &DIMENSIONS
+#'   # EW=630, NS=387, LAYERS=25, NZBND=858, NUBND=0, NVBND=0, NRIVERS=8, NUDAMS=0, NVDAMS=0, NWEIRS=0
+#'   # /
+#'   # &RIVERS
+#'   # KRQI=0, 0, 341, 606, 376, 82, 386, 169, 364, 302, 263, 193, 84, 579, 26, 477, 65, 159, RWQI=0.000000000000000000E+00, 522.000000000000000, 100.000000000000000, 450.000000000000000, 90
+#'   # 0.000000000000000, 37.0000000000000000, 48.0000000000000000, 21.0000000000000000, 125.000000000000000
+#'   # /
 write.river.append2NML = function(riverNames, riverInfos, riverData, grids, dIn, dOt, year, overwrite=TRUE, warn = TRUE) {
-  
-  ## NAMELIST: data_GRID_RIVER.nml
-  #' &DIMENSIONS
-  #' EW=630, NS=387, LAYERS=25, NZBND=858, NUBND=0, NVBND=0, NRIVERS=8, NUDAMS=0, NVDAMS=0, NWEIRS=0
-  #' /
-  #' &RIVERS
-  #' KRQI=0, 0, 341, 606, 376, 82, 386, 169, 364, 302, 263, 193, 84, 579, 26, 477, 65, 159, RWQI=0.000000000000000000E+00, 522.000000000000000, 100.000000000000000, 450.000000000000000, 90
-  #' 0.000000000000000, 37.0000000000000000, 48.0000000000000000, 21.0000000000000000, 125.000000000000000
-  #' /
-  #'
-  #' TODOs:
-  #'  - increment NRIVERS by number of new rivers in DIMENSIONS namelist
-  #'  - append coordinates (grid cell indices!) and inflow to RIVERS:
-  #'       --Y,X,VAL
-  #'       --MONTHLY (m3/s)
   
   strYear=formatC(year, format='d', width = 4)
   
@@ -126,8 +120,9 @@ write.river.append2NML = function(riverNames, riverInfos, riverData, grids, dIn,
                                 formatC(riverInfos[[iR]]$ycell, format='d'), 
                                 formatC(riverInfos[[iR]]$xcell, format='d'), 
                                 sep = ', ')
+
     RWQI[[iG]] = paste(RWQI[[iG]], 
-                                formatC(valOt, format='f', width = 19, digits = 18-ceiling(log10(valOt))), 
+                                formatC(valOt, format='f', width = 19, digits = 18-ceiling(pmax(1,log10(valOt)))), 
                                 sep = ', ')
   }
   

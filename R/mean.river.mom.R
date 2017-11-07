@@ -60,7 +60,7 @@ mean.river.mom = function(inData, from=inData$tstep, to='none') {
       nVars = dim(inData$data)[2]
       
       tmp_valsY = as.data.frame(array(0.0, dim = c(nYears, nVars)))
-      names(tmp_valsY) = names(inData$data[,-1])
+      names(tmp_valsY) = names(inData$data)
       
       for (iY in 1:length(strYears)) {
         strY = strYears[iY]
@@ -93,7 +93,7 @@ mean.river.mom = function(inData, from=inData$tstep, to='none') {
       # set time step
       otData$tstep = to
       # insert data
-      otData$data <- cbind(formatC(minYear:maxYear, format = 'd', width = 4), tmp_valsY)
+      otData$data <- cbind(formatC(minYear:maxYear, format = 'd', width = 4), tmp_valsY[,-1])
       names(otData$data)[1] <- 'time'
     } else {
       stop("mean.river.mom: only 'from==monthly && to==annual' is implemented")

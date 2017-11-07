@@ -21,7 +21,7 @@
 #' @examples
 #' 
 #'   # read a file:
-#'   test.mom <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
 read.river.mom = function(filename) {
   

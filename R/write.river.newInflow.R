@@ -22,7 +22,7 @@
 #' @examples
 #' 
 #'   # read a file:
-#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
 #'   # interpolate from monthly to daily
 #'   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')

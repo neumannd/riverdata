@@ -21,7 +21,7 @@
 #' @examples
 #' 
 #'   # read a file:
-#'   test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+#'   test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
 #'   
 #'   # calculate annual means from monthly data
 #'   test.mom.annual <- mean.river.mom(test.mom.monthly, to = 'anual')

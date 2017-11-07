@@ -42,8 +42,8 @@ One file per day is modified.
 
   # read a file:
   test.mom.monthly <- list()
-  test.mom.monthly$Warnow <- read.mom('files/GER_Dan_Str_Warnow.dat')
-  test.mom.monthly$Trave <- read.mom('files/GER_Dan_Str_Trave.dat')
+  test.mom.monthly$Warnow <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly$Trave <- read.river.mom('files/GER_Dan_Str_Trave.dat')
   
   # calculate annual means from monthly data
   test.mom.annual <- list()

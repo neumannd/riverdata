@@ -36,14 +36,14 @@ the interpolation methods 'step' is implemented.
 \examples{
 
   # read a file:
-  test.mom.monthly <- read.mom('files/GER_Dan_Str_Warnow.dat')
+  test.mom.monthly <- read.river.mom('files/GER_Dan_Str_Warnow.dat')
   
   # interpolate from monthly to daily
   test.mom.daily <- interpolate.river.mom(test.mom.monthly, to = 'daily', method = 'step')
   
 }
 \seealso{
-read.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
+read.river.mom, write.river.netCDF, write.river.append2Inflow, write.river.newInflow, mean.river.mom
 }
 \author{
 Daniel Neumann, daniel.neumann@io-warnemuende.de

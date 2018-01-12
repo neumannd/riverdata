@@ -4,8 +4,6 @@
 #'
 #' @param year a numeric giving a year
 #'
-#' Dies ist ein Test
-#'
 #' @return Returns a logical. It is TRUE when 'year' is a leap year according to the Gregorian calender. Else it is false.
 #' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
 #' @export

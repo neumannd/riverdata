@@ -2,6 +2,8 @@
 #' 
 #' Provides information (TRUE/FALSE) whether a year is a leap year (TRUE) or not (FALSE).
 #'
+#' Abc
+#'
 #' @param year a numeric giving a year
 #'
 #' @return Returns a logical. It is TRUE when 'year' is a leap year according to the Gregorian calender. Else it is false.

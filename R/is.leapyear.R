@@ -8,13 +8,7 @@
 #'
 #' @return Returns a logical. It is TRUE when 'year' is a leap year according to the Gregorian calender. Else it is false.
 #' @author Daniel Neumann, daniel.neumann@io-warnemuende.de
-#' @export
-#'
-#' @examples
-#'   is.leapyear(2012)
-#'   # return: TRUE
-#'   
-#'   is.leapyear(2001)
+
 #'   # return: FALSE
 #'   
 #'   is.leapyear(1998:2010)

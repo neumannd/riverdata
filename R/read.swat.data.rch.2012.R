@@ -148,7 +148,7 @@ read.swat.data.rch.2012 <- function(fileHandle, nrow.data, header = TRUE, nreach
                       'kg P',
                       'mg NO3-N/kg sed')
   data.out$format = 'swat'
-  otData$tstep = 'annual'
+  data.out$tstep = 'annual'
   warning('read.swat.data.rch.2012 warning: tstep might not be properly set')
   
   # expected default header
